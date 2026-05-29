@@ -8,24 +8,38 @@
         $id_update = addslashes($_GET["id_usuario"]);
         $dados = $usuario->buscarDadosUsuario($id_update);
     }
-?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuario</title>
-</head>
-<body>
-    <h2 class="titulo-pagina">EDITAR USUARIO</h2>
+    if(isset($_POST["nome"]))
+    {
+        $nome = addslashes($_POST["nome"]);
+        $email = addslashes($_POST["email"]);
+        $telefone = addslashes($_POST["telefone"]);
 
-    <form method="post">
-        <input type="text" name="nome" value="<?php echo $dados['nome']; ?>">
-        <input type="text" name="email" value="<?php echo $dados['email']; ?>">
-        <input type="text" name="telefone" value="<?php echo $dados['telefone']; ?>">
-        <input type="submit" value="ATUALIZAR">
-    </form>
+        if(!empty($nome) && !empty($email) && !empty($telefone))
+        {
+            $usuario->atualizarDadosUsuario($id_update, $nome, $email, $telefone);
+
+            header("location: listar.php");
+        }
+    }
+    ?>
     
-</body>
-</html>
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Editar Usuario</title>
+    </head>
+    <body>
+        <h2 class="titulo-pagina">EDITAR USUARIO</h2>
+    
+        <form method="post">
+            <input type="text" name="nome" value="<?php echo $dados['nome']; ?>">
+            <input type="text" name="email" value="<?php echo $dados['email']; ?>">
+            <input type="text" name="telefone" value="<?php echo $dados['telefone']; ?>">
+            <input type="submit" value="ATUALIZAR">
+        </form>
+        
+    </body>
+    </html>
